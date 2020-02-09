@@ -1,34 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import SeasonDisplay from "./SeasonDisplay";
 
 // sub-classing React.Component
 // borrowing functionality
 class App extends React.Component {
-  // React.Component has contructor function of its own
-  // When we create a contructor function here, we're over-riding the default function
-  constructor(props) {
-    // super is a ference to the parent React.Component component
-    super(props);
+  counter = 0;
 
-    // This is the only time we do direct assignment to state
-    // setState is used afterwards
-    this.state = { lat: null, errorMessage: "" };
-
-    this.counter = 0;
-
-    window.navigator.geolocation.getCurrentPosition(
-      position => {
-        // Whenever state changes, the component re-renders
-        this.setState({ lat: position.coords.latitude });
-      },
-      err => {
-        this.setState({ errorMessage: err.message });
-      }
-    );
-  }
+  state = { lat: null, errorMessage: "" };
 
   componentDidMount() {
     console.log("Mounted");
+    window.navigator.geolocation.getCurrentPosition(
+      position => this.setState({ lat: position.coords.latitude }),
+      err => this.setState({ errorMessage: err.message })
+    );
   }
 
   componentDidUpdate() {
@@ -51,7 +37,7 @@ class App extends React.Component {
       return (
         <div>
           <p>Render Count: {this.counter}</p>
-          <p>Latitude: {this.state.lat}</p>
+          <SeasonDisplay lat={this.state.lat} />
         </div>
       );
     }
