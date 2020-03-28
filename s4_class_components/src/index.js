@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
+import Loader from "./Loader";
 
 // sub-classing React.Component
 // borrowing functionality
@@ -9,6 +10,7 @@ class App extends React.Component {
 
   state = { lat: null, errorMessage: "" };
 
+  // Do data-fetching here, not in render
   componentDidMount() {
     console.log("Mounted");
     window.navigator.geolocation.getCurrentPosition(
@@ -21,9 +23,8 @@ class App extends React.Component {
     console.log("Updated");
   }
 
-  render() {
-    this.counter++;
-
+  renderContent() {
+    // Avoid conditionals in render, hence this helper function
     if (this.state.errorMessage && !this.state.lat) {
       return (
         <div>
@@ -36,17 +37,18 @@ class App extends React.Component {
     if (!this.state.errorMessage && this.state.lat) {
       return (
         <div>
-          <p>Render Count: {this.counter}</p>
+          {/* <p>Render Count: {this.counter}</p> */}
           <SeasonDisplay lat={this.state.lat} />
         </div>
       );
     }
 
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <Loader message="Ch-ch-changes..." />;
+  }
+
+  render() {
+    this.counter++;
+    return <div className="border red">{this.renderContent()}</div>;
   }
 }
 

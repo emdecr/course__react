@@ -1,5 +1,6 @@
+import "./SeasonDisplay.css";
+// Behind the scenes webpack will put the css into index.html
 import React from "react";
-import ReactDOM from "react-dom";
 
 const seasonConfig = {
   summer: { text: "Holy hell, it's hot!", iconName: "sun" },
@@ -20,10 +21,10 @@ const SeasonDisplay = props => {
   //   deconstruct it!
   const { text, iconName } = seasonConfig[season]; // { text, iconName }
   return (
-    <div>
-      <i className={`${iconName} icon`}></i>
+    <div className={`season-display ${season}`}>
+      <i className={`icon-left massive ${iconName} icon`}></i>
       <h1>{text}</h1>
-      <i className={`${iconName} icon`}></i>
+      <i className={`icon-right massive ${iconName} icon`}></i>
     </div>
   );
 };
