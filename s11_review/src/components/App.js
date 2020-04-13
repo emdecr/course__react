@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 import VideoDetail from "./VideoDetail";
 import VideoList from "./VideoList";
 import youtube from "../apis/youtube";
-const KEY = "AIzaSyAOM2DO9aEAmfxzOOSFDRqjUuUulIrEVp8";
+const KEY = process.env.REACT_APP_YOUTUBE_KEY;
 
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
