@@ -13,16 +13,15 @@ const App = () => {
     <div className="ui container">
       <Router history={history}>
         <div>
-          <Header />
-           <Route path="/" exact component={StreamList}></Route>
+          <Header /> <Route path="/" exact component={StreamList}></Route>
           <Route path="/streams/new" exact component={StreamCreate}></Route>
           <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
           <Route
-            path="/stream/delete/:id"
+            path="/streams/delete/:id"
             exact
             component={StreamDelete}
           ></Route>
-          <Route path="/stream/show/:id" exact component={StreamShow}></Route>
+          <Route path="/streams/show/:id" exact component={StreamShow}></Route>
         </div>
       </Router>
     </div>
