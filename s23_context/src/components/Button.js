@@ -12,20 +12,24 @@ class Button extends React.Component {
     return value === "EN" ? "Submit" : "Voorleggen";
   }
 
+  renderButton(colour) {
+    return (
+      <button className={`ui button ${colour}`}>
+        <LangContext.Consumer>
+          {/* Whenever you use a Consumer, pass in a single child equal to a function */}
+          {/* That child will be called with whatever data is in that context pipe */}
+          {value => (value === "EN" ? "Submit" : "Voorleggen")}
+          {/* {value => this.renderSubmit(value)} */}
+        </LangContext.Consumer>
+      </button>
+    );
+  }
+
   render() {
     return (
       <div>
         <ColourContext.Consumer>
-          {colour => (
-            <button className={`ui button ${colour}`}>
-              <LangContext.Consumer>
-                {/* Whenever you use a Consumer, pass in a single child equal to a function */}
-                {/* That child will be called with whatever data is in that context pipe */}
-                {value => (value === "EN" ? "Submit" : "Voorleggen")}
-                {/* {value => this.rendersubmit(value)} */}
-              </LangContext.Consumer>
-            </button>
-          )}
+          {colour => this.renderButton(colour)}
         </ColourContext.Consumer>
       </div>
     );
