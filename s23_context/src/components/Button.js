@@ -1,5 +1,6 @@
 import React from "react";
 import LangContext from "../contexts/LangContext";
+import ColourContext from "../contexts/ColourContext";
 
 class Button extends React.Component {
   // static key adds property to class
@@ -14,14 +15,18 @@ class Button extends React.Component {
   render() {
     return (
       <div>
-        <button className="ui button primary">
-          <LangContext.Consumer>
-            {/* Whenever you use a Consumer, pass in a single child equal to a function */}
-            {/* That child will be called with whatever data is in that context pipe */}
-            {value => (value === "EN" ? "Submit" : "Voorleggen")}
-            {/* {value => this.rendersubmit(value)} */}
-          </LangContext.Consumer>
-        </button>
+        <ColourContext.Consumer>
+          {colour => (
+            <button className={`ui button ${colour}`}>
+              <LangContext.Consumer>
+                {/* Whenever you use a Consumer, pass in a single child equal to a function */}
+                {/* That child will be called with whatever data is in that context pipe */}
+                {value => (value === "EN" ? "Submit" : "Voorleggen")}
+                {/* {value => this.rendersubmit(value)} */}
+              </LangContext.Consumer>
+            </button>
+          )}
+        </ColourContext.Consumer>
       </div>
     );
   }
