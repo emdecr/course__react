@@ -8,8 +8,8 @@ class Button extends React.Component {
   static contextType = LangContext;
 
   // If logic gets too dense in the Consumer child, use a helper function
-  renderSubmit(value) {
-    return value === "EN" ? "Submit" : "Voorleggen";
+  renderSubmit(lang) {
+    return lang === "EN" ? "Submit" : "Voorleggen";
   }
 
   renderButton(colour) {
@@ -18,7 +18,7 @@ class Button extends React.Component {
         <LangContext.Consumer>
           {/* Whenever you use a Consumer, pass in a single child equal to a function */}
           {/* That child will be called with whatever data is in that context pipe */}
-          {value => (value === "EN" ? "Submit" : "Voorleggen")}
+          {({ lang }) => (lang === "EN" ? "Submit" : "Voorleggen")}
           {/* {value => this.renderSubmit(value)} */}
         </LangContext.Consumer>
       </button>
