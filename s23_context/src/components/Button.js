@@ -6,11 +6,22 @@ class Button extends React.Component {
   // Button.contextType = LangContext;
   static contextType = LangContext;
 
+  // If logic gets too dense in the Consumer child, use a helper function
+  renderSubmit(value) {
+    return value === "EN" ? "Submit" : "Voorleggen";
+  }
+
   render() {
-    const text = this.context === "EN" ? "Submit" : "Voorleggen";
     return (
       <div>
-        <button className="ui button primary">{text}</button>
+        <button className="ui button primary">
+          <LangContext.Consumer>
+            {/* Whenever you use a Consumer, pass in a single child equal to a function */}
+            {/* That child will be called with whatever data is in that context pipe */}
+            {value => (value === "EN" ? "Submit" : "Voorleggen")}
+            {/* {value => this.rendersubmit(value)} */}
+          </LangContext.Consumer>
+        </button>
       </div>
     );
   }
