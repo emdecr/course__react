@@ -6,6 +6,7 @@ import useLocation from "./useLocation";
 
 const App = () => {
   const [lat, errorMessage] = useLocation();
+
   let content;
   if (errorMessage) {
     content = <div>Error: {errorMessage}</div>;
