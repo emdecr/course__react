@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-class ResourceList extends React.Component {
-  state = { resources: [] };
-  async componentDidMount() {
+const ResourceList = ({ resource }) => {
+  const [resources, setResources] = useState([]);
+  const fetchResource = async resource => {
     const res = await axios.get(
-      `https:jsonplaceholder.typicode.com/${this.props.resource}`
+      `https:jsonplaceholder.typicode.com/${resource}`
     );
-    this.setState({ resources: res.data });
-  }
-  async componentDidUpdate(prevProps) {
-    //   If you didn't have this check, it would keep making the axios request
-    if (prevProps.resource !== this.props.resource) {
-      const res = await axios.get(
-        `https:jsonplaceholder.typicode.com/${this.props.resource}`
-      );
-      this.setState({ resources: res.data });
-    }
-  }
-  render() {
-    return <div>Resource: {this.state.resources.length}</div>;
-  }
-}
+    setResources(res.data);
+  };
+
+  // If second argument [] changes, the arrow function is called
+  //   Like what was happening with if statement in didComponentUpdate when this was a class comp
+  useEffect(() => {
+    fetchResource(resource);
+  }, [resource]);
+  // NTS: if you pass in an empty array, the function only gets called once
+  //   Like making the call in componentDidMount
+  // NTS: if you don't pass in an array, the function keeps getting called
+
+  return <div>Resource count:{resources.length}</div>;
+};
 
 export default ResourceList;
