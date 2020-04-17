@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ResourceList = ({ resource }) => {
+const useResources = resourceType => {
   const [resources, setResources] = useState([]);
-  const fetchResource = async resource => {
-    const res = await axios.get(
-      `https:jsonplaceholder.typicode.com/${resource}`
-    );
-    setResources(res.data);
-  };
 
   // If second argument [] changes, the arrow function is called
   //   Like what was happening with if statement in didComponentUpdate when this was a class comp
   useEffect(() => {
-    fetchResource(resource);
-  }, [resource]);
+    (async resourceType => {
+      const res = await axios.get(
+        `https:jsonplaceholder.typicode.com/${resourceType}`
+      );
+      setResources(res.data);
+    })(resourceType);
+  }, [resourceType]);
   // NTS: if you pass in an empty array, the function only gets called once
   //   Like making the call in componentDidMount
   // NTS: if you don't pass in an array, the function keeps getting called
+  return resources;
+};
 
-  return <div>Resource count:{resources.length}</div>;
+const ResourceList = ({ resourceType }) => {
+  const resources = useResources(resourceType);
+
+  return (
+    <ul>
+      {resources.map(r => (
+        <li key={r.id}>{r.title}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default ResourceList;
